@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { transactionSliceActions } from "../store/transactionReducer";
 
 import { useLocation } from "react-router";
 import { modiPathName, statefullPathName } from "../util/global_util";
@@ -9,11 +10,14 @@ import Button from "./Button";
 const Transaction = () => {
   const { pathname } = useLocation();
   const pName = statefullPathName(modiPathName(pathname));
+  const dispatch = useDispatch();
 
   const inputRef = useRef();
 
   function transactionHandler() {
     const inputRefValue = +inputRef.current.value;
+    dispatch(transactionSliceActions.withdraw(inputRefValue));
+    inputRef.current.value = "";
   }
 
   return (

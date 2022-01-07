@@ -9,6 +9,7 @@ const Selection = (props) => {
   const listRef = useRef();
 
   useEffect(() => {
+    console.log("transactions: ", transactions);
     setHeaders(Object.keys(transactions));
     const checkboxList = listRef.current.children;
     setTimeout(() => {

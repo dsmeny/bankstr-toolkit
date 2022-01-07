@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { balance: 170, deposit: 150, withdraw: 20 };
+const initialState = { balance: 100, deposit: 0, withdraw: 0 };
 
 const transactionSlice = createSlice({
   name: "transactions",
   initialState,
-  reducer: {
+  reducers: {
     withdraw(state, payload) {
       state.withdrawal = payload;
       state.balance -= payload;
@@ -17,6 +17,6 @@ const transactionSlice = createSlice({
   },
 });
 
-const transactionSliceActions = transactionSlice.actions;
+export const transactionSliceActions = transactionSlice.actions;
 
 export default transactionSlice.reducer;
