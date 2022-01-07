@@ -1,20 +1,29 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+
 import PageTemplate from "../components/PageTemplate";
 import Content from "../components/Content";
 import Selection from "../components/Selection";
 
 const Home = () => {
-  const checkHandler = (e) => {
-    const { refElem, radioButton } = e;
-    console.log("refElem: ", refElem);
-    console.log("radioButton: ", radioButton);
+  const [selectedRef, setSelectedRef] = useState("");
+
+  useEffect(() => {
+    setSelectedRef("balance");
+  }, []);
+
+  const checkHandler = (listRefID, elemID) => {
+    setSelectedRef(elemID);
+    [...listRefID.children].forEach((input) => {
+      if (input.id !== elemID) {
+        input.checked = false;
+      }
+    });
   };
 
   return (
     <PageTemplate>
-      <Content amt={20} selectRef={element} />
-      <Selection checkHandler={checkHandler} accountType={accountType[0]} />
+      <Content selectRef={selectedRef} />
+      <Selection checkHandler={checkHandler} />
     </PageTemplate>
   );
 };

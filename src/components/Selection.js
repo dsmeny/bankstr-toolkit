@@ -1,24 +1,32 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Selection = (props) => {
-  const radioRef = useRef();
+  const [headers, setHeaders] = useState([]);
+  const transactions = useSelector((state) => state.transactions);
+
+  const listRef = useRef();
 
   useEffect(() => {
-    const nodes = [...radioRef.current.childNodes];
-    nodes[0].checked = true;
-  }, []);
+    setHeaders(Object.keys(transactions));
+    const checkboxList = listRef.current.children;
+    setTimeout(() => {
+      if ([...checkboxList].every((li) => !li.checked)) {
+        [...checkboxList][0].checked = true;
+      }
+    }, 1000);
+  }, [transactions, listRef]);
 
   function selectedElement(e) {
-    const refElem = radioRef.current;
-    const radioButton = e.target;
-    props.checkHandler({ refElem, radioButton });
+    const targetRadioBtn = e.target.id;
+    props.checkHandler(listRef.current, targetRadioBtn);
   }
 
   return (
-    <ul id="list" ref={radioRef}>
-      {props.accountType.map((type, index) => (
-        <Link onChange={selectedElement} type="radio" id={type} key={index} />
+    <ul id="list" ref={listRef}>
+      {headers.map((header, index) => (
+        <Link onChange={selectedElement} type="radio" id={header} key={index} />
       ))}
     </ul>
   );

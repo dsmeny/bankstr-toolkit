@@ -1,10 +1,17 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Content = (props) => {
+  const state = useSelector((state) => state.transactions);
+
+  const transactType = Object.keys(state).find(
+    (type) => type === props.selectRef
+  );
+
   return (
     <View>
       <h2>{props.selectRef}</h2>
-      <p>${props.amt}</p>
+      <p>${state[transactType]}</p>
     </View>
   );
 };
